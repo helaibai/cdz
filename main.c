@@ -3,8 +3,11 @@
 #include <errno.h>
 #include <arpa/inet.h>
 
-#include "event2/event.h"
-#include "event2/bufferevent.h"
+#include <event2/event.h>
+#include <event2/bufferevent.h>
+
+#include "timer.h"
+
 int station_socket_init(void)
 {
 	return 0;
@@ -48,20 +51,21 @@ int main(int argc, char **argv)
 	station_socket_init();
 	memset(&server_addr, 0, sizeof(server_addr) );
 	server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(2204);
+	server_addr.sin_port = htons(2404);
 	inet_aton("10.0.0.2", &server_addr.sin_addr);
 
+	bufferevent_setcb(station_bufferevent, station_bufferevent_read_cb, NULL, station_bufferevent_cb, NULL);
 	ret = bufferevent_socket_connect(station_bufferevent, (struct sockaddr *)&server_addr, sizeof(server_addr));
 	if(ret != 0){
 		fprintf(stderr, "E:%s()-L%d:%s\n",__FUNCTION__,__LINE__,strerror(errno));
 		goto out;
 	}
-	bufferevent_setcb(station_bufferevent, station_bufferevent_read_cb, NULL, station_bufferevent_cb, NULL);
 	ret = bufferevent_enable(station_bufferevent, EV_READ|EV_WRITE|EV_PERSIST);
 	if(ret != 0){
 		fprintf(stderr, "E:%s()-L%d:%s\n",__FUNCTION__,__LINE__,strerror(errno));
 		goto out;
 	}
+	cdz_timer_init(ebase);
 	event_base_dispatch(ebase);
 out:
 	if(ebase)

@@ -1,4 +1,4 @@
-Target=master
+Target=sproxy.exe
 
 CC = gcc
 STRIP=strip
@@ -7,7 +7,7 @@ CFLAGS += -I./include
 LDLIBEVENT+= -levent -levent_core -levent_extra
 LDFLAGS += -L./libs $(LDLIBEVENT)
 
-OBJS = main.o util.o 
+OBJS = main.o util.o timer.o 
 
 all: $(Target)
 
