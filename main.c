@@ -19,12 +19,10 @@ int station_net_loop_init(int try_times, int time_cell)
 	/*2. GRPS module */
 	return ret;
 }
-#if 0
-struct 
 struct station_struct {
-	struct 	
+	struct event_base *ebase;
+	struct bufferevent *station_bufferevent;
 };
-#endif
 void station_bufferevent_read_cb(struct bufferevent *bev, void *ctx)
 {
 	fprintf(stderr, "D:%s()-L%d\n",__FUNCTION__,__LINE__);

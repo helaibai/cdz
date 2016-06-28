@@ -2,13 +2,22 @@
 #include "timer.h"
 #include "event2/event.h"
 
-#define TIMER_T0_TIMEOUT 1
-#define TIMER_T1_TIMEOUT 2
-#define TIMER_T2_TIMEOUT 3
-#define TIMER_T3_TIMEOUT 4
+#define TIMER_SENDWORK_TIMEOUT 1
+#define TIMER_T0_TIMEOUT 20 
+#define TIMER_T1_TIMEOUT 15
+#define TIMER_T2_TIMEOUT 10 
+#define TIMER_T3_TIMEOUT 20
 
-static struct cdz_timer t0,t1,t2,t3;
+static struct cdz_timer sendwork,t0,t1,t2,t3;
 
+void sendwork_timeout_cb(evutil_socket_t fd, short event, void *arg)
+{
+	struct cdz_timer *cp = arg;
+	struct timeval newtime;
+	evutil_gettimeofday(&newtime, NULL);
+	fprintf(stderr, "D:%s()-L%d:%d\n",__FUNCTION__,__LINE__,(int)newtime.tv_sec);
+	evtimer_add(&cp->tevent, &cp->tv);
+}
 void t0_timeout_cb(evutil_socket_t fd, short event, void *arg)
 {
 	struct cdz_timer *cp = arg;
@@ -43,6 +52,12 @@ void t3_timeout_cb(evutil_socket_t fd, short event, void *arg)
 }
 int cdz_timer_init(struct event_base *ebase)
 {
+	memset(&sendwork, 0x00, sizeof(sendwork));
+	sendwork.name = "";
+	sendwork.tv.tv_sec = TIMER_SENDWORK_TIMEOUT;
+	evtimer_assign(&sendwork.tevent, ebase, sendwork_timeout_cb, (void*) &sendwork);
+	evtimer_add(&sendwork.tevent, &sendwork.tv);
+
 	memset(&t0, 0x00, sizeof(t0));
 	t0.name = "";
 	t0.tv.tv_sec = TIMER_T0_TIMEOUT;
