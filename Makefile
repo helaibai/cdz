@@ -7,7 +7,7 @@ CFLAGS += -I./include
 LDLIBEVENT+= -levent -levent_core -levent_extra
 LDFLAGS += -L./libs $(LDLIBEVENT)
 
-OBJS = main.o util.o timer.o 
+OBJS = main.o util.o timer.o gprs_module.o 
 
 all: $(Target)
 
