@@ -16,7 +16,7 @@ void sendwork_timeout_cb(evutil_socket_t fd, short event, void *arg)
 	struct timeval newtime;
 	evutil_gettimeofday(&newtime, NULL);
 	fprintf(stderr, "D:%s()-L%d:%d\n",__FUNCTION__,__LINE__,(int)newtime.tv_sec);
-	sleep(20);
+	//sleep(20);
 	evtimer_add(&cp->tevent, &cp->tv);
 }
 void t0_timeout_cb(evutil_socket_t fd, short event, void *arg)
@@ -84,8 +84,3 @@ int cdz_timer_init(struct event_base *ebase)
 	evtimer_add(&t3.tevent, &t3.tv);
 	return 0;	
 }
-
-struct cdz_timout {
-	struct event_base *base;
-	struct event 
-};
