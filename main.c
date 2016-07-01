@@ -7,6 +7,7 @@
 #include <event2/bufferevent.h>
 
 #include "timer.h"
+#include "log4c.h" 
 
 int station_socket_init(void)
 {
@@ -38,7 +39,8 @@ int main(int argc, char **argv)
 	struct event_base *ebase = NULL;
 	struct bufferevent *station_bufferevent = NULL;
 	struct sockaddr_in server_addr;
-
+	log4c_init();
+log4c_fini();
 	ret = station_net_loop_init(10, 3);
 	if(ret != 0){
 		return ret;
