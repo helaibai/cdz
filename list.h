@@ -7,7 +7,7 @@ struct list_head {
 	struct list_head *prev, *next;
 };
 
- #define LIST_HEAD_INIT(name) { &(name), &(name) }
+#define LIST_HEAD_INIT(name) { &(name), &(name) }
 
 #define INIT_LIST_HEAD(name_ptr)        do {    (name_ptr)->next = (name_ptr); \
 	(name_ptr)->prev = (name_ptr); \

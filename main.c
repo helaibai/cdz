@@ -34,13 +34,13 @@ void station_bufferevent_cb(struct bufferevent *bev, short what, void *ctx)
 }
 int main(int argc, char **argv)
 {
-	
+
 	int ret;
 	struct event_base *ebase = NULL;
 	struct bufferevent *station_bufferevent = NULL;
 	struct sockaddr_in server_addr;
 	log4c_init();
-log4c_fini();
+	log4c_fini();
 	ret = station_net_loop_init(10, 3);
 	if(ret != 0){
 		return ret;
