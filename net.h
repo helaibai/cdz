@@ -8,7 +8,7 @@
 #include "list.h"
 struct send_buffer_node {
 	struct list_head list;
-	char *frame;
+	void *frame;
 	int len;
 };
 struct send_list {

@@ -32,6 +32,17 @@ void station_bufferevent_cb(struct bufferevent *bev, short what, void *ctx)
 {
 	fprintf(stderr, "D:%s()-L%d\n",__FUNCTION__,__LINE__);
 }
+#if 1
+int main(int argc, char **argv)
+{
+	int ret;
+	cdz_log_init();
+	ret = cdz_timer_init(NULL);
+	if(ret != 0){
+	
+	}
+}
+#else
 int main(int argc, char **argv)
 {
 
@@ -74,3 +85,4 @@ out:
 		bufferevent_free(station_bufferevent);
 	return 0;
 }
+#endif
