@@ -10,7 +10,7 @@ LIBROOT=./libs/$(OS)/$(MACHINE)
 LDLIBEVENT= -levent -levent_core -levent_extra
 LIBEVENT=-L$(LIBROOT) $(LDLIBEVENT) 
 LDFLAGS += $(LIBEVENT) -llog4c 
-OBJS = main.o util.o timer.o gprs_module.o uart.o net.o 
+OBJS = main.o util.o timer.o gprs.o cdz_socket.o cfg.o uart.o frame.o 
 
 all: $(Target)
 
