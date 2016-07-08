@@ -9,7 +9,7 @@ CFLAGS += -I./include
 LIBROOT=./libs/$(OS)/$(MACHINE)
 LDLIBEVENT= -levent -levent_core -levent_extra
 LIBEVENT=-L$(LIBROOT) $(LDLIBEVENT) 
-LDFLAGS += $(LIBEVENT) -llog4c 
+LDFLAGS += $(LIBEVENT) -llog4c -lrt -lpthread 
 OBJS = main.o util.o timer.o gprs.o cdz_socket.o cfg.o uart.o frame.o 
 
 all: $(Target)
